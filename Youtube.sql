@@ -28,7 +28,7 @@ CREATE TABLE "User" (
 
 CREATE TABLE Channel (
     channel_id SERIAL NOT NULL,
---     owner_id INTEGER REFERENCES "User" (user_id),
+    owner_id INTEGER REFERENCES "User" (user_id),
     "name" VARCHAR(100) NOT NULL,
     subsCounter INTEGER NOT NULL,
     description VARCHAR(1000) NOT NULL,
@@ -61,10 +61,11 @@ CREATE TABLE Post (
 
 CREATE TABLE "Comment" (
     comment_id SERIAL NOT NULL,
+    parent_id INTEGER REFERENCES "Comment" (comment_id),
     channel_id INTEGER NOT NULL REFERENCES Channel (channel_id),
-    related_video_id INTEGER REFERENCES Video (video_id),			--спросить!!
-    related_post_id INTEGER REFERENCES Post (post_id),				--спросить!!
-    relatedTo BOOLEAN NOT NULL,
+    related_video_id INTEGER REFERENCES Video (video_id),
+    related_post_id INTEGER REFERENCES Post (post_id),
+--     relatedTo BOOLEAN NOT NULL,
     "content" TEXT NOT NULL,
     likesCount INTEGER NOT NULL,
     dislikesCount INTEGER NOT NULL,
@@ -77,7 +78,7 @@ CREATE TABLE Playlist (
     channel_id INTEGER NOT NULL REFERENCES Channel (channel_id),
     video_id INTEGER NOT NULL REFERENCES Video (video_id),
     "name" VARCHAR(100) NOT NULL,
-    lastChaneDate TIMESTAMP NOT NULL,
+    lastChangeDate TIMESTAMP NOT NULL,
     viewsCount INTEGER NOT NULL,
     PRIMARY KEY (playlist_id)
 );
