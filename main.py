@@ -46,7 +46,7 @@ def insert_channel (cur):
 
     for user in users:
         while True:
-            name = fake.text(max_nb_chars=100)
+            name = fake.user_name()
             if name not in existing_names:
                 existing_names.add(name)
                 break
@@ -193,11 +193,10 @@ def insert_playlist_video(cur):
 
 
 def main():
-    fake.user_name()
     conn = psycopg2.connect(dbname='postgres', user='postgres',
                             password='123', host='localhost')
     cursor = conn.cursor()
-    n = 10
+    n = 100000
     insert_users(cursor, n)
     for i in range(0, n):
         insert_channel(cursor)
@@ -215,6 +214,7 @@ def main():
         insert_chat(cursor)
     conn.commit()
     conn.close()
+    fake.
 
 if __name__ == '__main__':
     # print(random.randint(0, 1))
